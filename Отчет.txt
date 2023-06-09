@@ -1,0 +1,89 @@
+1. Шифр виженера
+def alphabet(let):
+    if 65 <= ord(let) <= 90:
+        return ord(let) - 64
+    elif 97 <= ord(let) <= 122:
+        return ord(let) - 96
+    else:
+        return 0
+
+def vigenere_cipher(text, key):
+    k = 0
+    cipher_text = ''
+    for i in range(len(text)):
+        if 65 <= ord(text[i]) <= 90 or 97 <= ord(text[i]) <= 122:
+            cipher_text += chr((alphabet(text[i]) + alphabet(key[k % len(key)])) % 26 + 95)
+            k += 1
+        else:
+            cipher_text += ' '
+    return cipher_text
+
+word = "hello world"
+key = "cat"
+cipher_text = vigenere_cipher(word, key)
+print(cipher_text)
+
+
+2. Хэширование
+import hashlib
+
+def hash_password(password):
+    hash = hashlib.sha256()
+    hash.update(password.encode("utf-8"))
+    hash_value = hash.hexdigest()
+    return hash_value
+
+def sign_up(file, login, password):
+    hashed_password = hash_password(password)
+    file.write(login + " : " + hashed_password + "\n")
+
+def sign_in(file, login, password):
+    hashed_password = hash_password(password)
+    for line in file:
+        line = line.rstrip()
+        if line.startswith(login + " : "):
+            if line.split(" : ")[1] == hashed_password:
+                return "Welcome!!!"
+            else:
+                return "Password is wrong"
+    return "User not found"
+
+a = int(input())
+login = input("Login: ")
+password = input("Password: ")
+
+file_path = r"C:\Users\Amanb\OneDrive\Рабочий стол\hash.txt"
+
+if a == 1:
+    with open(file_path, "a") as file_a:
+        sign_up(file_a, login, password)
+elif a == 2:
+    with open(file_path, "r") as file_r:
+        print(sign_in(file_r, login, password))
+
+
+
+
+Python
+3.1
+print("Hello, World!")
+
+3.2
+n = int(input())
+
+    if n % 2 == 1 or (n % 2 == 0 and 6 <= n <= 20):
+       print("Weird")
+    else:
+       print("Not Weird")
+
+3.3
+ a = int(input())
+    b = int(input())
+    print(a//b)
+    print(a/b)
+3.4
+ n = int(input())
+    for i in range(n):
+        print(i**2)
+
+
